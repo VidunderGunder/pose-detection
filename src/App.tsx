@@ -1,68 +1,78 @@
 /** @jsxImportSource @emotion/react */
 import { Global, css } from "@emotion/react";
-import { MantineProvider } from "@mantine/core";
-import Game from "./game/Game";
-import { WebcamCapture } from "./Camera";
+import {
+  AppShell,
+  Button,
+  Divider,
+  Header,
+  List,
+  MantineProvider,
+  Navbar,
+  Text,
+  ThemeIcon,
+  Title,
+} from "@mantine/core";
+import Brand from "./Components/Brand";
+import { Camera } from "./Components/Camera";
+import { appCSS } from "./styles";
+import { FaCamera } from "react-icons/fa";
 
 export default function App() {
   return (
     <MantineProvider theme={{ colorScheme: "dark" }}>
-      <Global
-        styles={css`
-          html,
-          body,
-          #root {
-            height: 100%;
-            background-color: #22222b;
-            overflow: hidden;
-          }
-          html,
-          body,
-          div,
-          span {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-          }
-          html,
-          * {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            outline: none;
-          }
-        `}
-      />
-      <div
-        css={css`
-          height: 100%;
-          width: 100%;
-          display: grid;
-          place-items: center;
-        `}
+      <Global styles={appCSS} />
+      <AppShell
+        fixed
+        padding={0}
+        navbar={
+          <Navbar width={{ base: 300 }} padding="sm">
+            <Navbar.Section>
+              <Brand />
+            </Navbar.Section>
+            <Navbar.Section grow mt="lg">
+              <Divider />
+              <div
+                css={css`
+                  padding: 1rem 0;
+                `}
+              >
+                <Button
+                  fullWidth
+                  variant="gradient"
+                  gradient={{ from: "indigo", to: "cyan" }}
+                  leftIcon={<FaCamera />}
+                >
+                  Camera
+                </Button>
+              </div>
+            </Navbar.Section>
+            {/* <Navbar.Section>
+              <Divider />
+              <Text>FOOTER</Text>
+            </Navbar.Section> */}
+          </Navbar>
+        }
+        styles={(theme) => ({
+          main: {
+            backgroundColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[8]
+                : theme.colors.gray[0],
+          },
+        })}
       >
-        <WebcamCapture
-          css={css`
-            width: max(25%, 250px);
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            z-index: 1;
-          `}
-        />
         <div
           css={css`
             width: 100%;
             height: 100%;
-            position: absolute;
+            display: grid;
+            place-items: center;
+            padding: 1rem;
           `}
         >
-          <Game />
+          <Camera />
         </div>
-      </div>
+      </AppShell>
     </MantineProvider>
   );
 }

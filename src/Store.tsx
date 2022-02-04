@@ -1,10 +1,12 @@
 import { Store } from "pullstate";
-import { Pose } from "@tensorflow-models/pose-detection";
 
-export const GameStore = new Store<{
-  poses: Pose[];
-  poseThreshold: number;
+export type Result = unknown[];
+
+export const store = new Store<{
+  results: Result[];
+  threshold: number;
+  frequency?: number;
 }>({
-  poses: [],
-  poseThreshold: 0.25,
+  results: [],
+  threshold: 0.25,
 });
